@@ -54,6 +54,10 @@ df['Year'] = df['StartDate'].dt.year
 # Grouping data by Year and MistakeTypeCategory
 mistake_category_trend = df.groupby(['Year', 'MistakeTypeCategory']).size().unstack()
 
+#Fix: Fill missing values with 0
+mistake_category_trend = mistake_category_trend.fillna(0)
+
+
 # Plot the trend
 plt.figure(figsize=(10,6))
 mistake_category_trend.plot(marker='o', linestyle='-', figsize=(10,6), colormap='tab10')
