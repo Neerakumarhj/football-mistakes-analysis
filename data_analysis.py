@@ -47,6 +47,22 @@ plt.title('Trend of Moderate Mistakes (2022-2024)')
 plt.grid(True)
 plt.show()
 
+# Ensure 'StartDate' is in datetime format and extract the year
+df['StartDate'] = pd.to_datetime(df['StartDate'])
+df['Year'] = df['StartDate'].dt.year
+
+# Grouping data by Year and MistakeTypeCategory
+mistake_category_trend = df.groupby(['Year', 'MistakeTypeCategory']).size().unstack()
+
+# Plot the trend
+plt.figure(figsize=(10,6))
+mistake_category_trend.plot(marker='o', linestyle='-', figsize=(10,6), colormap='tab10')
+plt.xlabel('Year')
+plt.ylabel('Count of Mistakes')
+plt.title('Yearly Trend of Mistake Categories (2022-2024)')
+plt.legend(title='Mistake Type Category', bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.grid(True)
+plt.show()
 # Count of mistakes by type
 mistakes_by_type = df['MistakeType'].value_counts()
 
